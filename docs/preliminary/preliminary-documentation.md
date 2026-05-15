@@ -4,8 +4,6 @@
 **Group:** 16  
 **Warsaw University of Technology**
 
-Date: 15 May 2026
-
 ## Project Scope
 
 The goal is to predict the sale price of a diamond from its measurable properties and quality grades. This is a supervised regression problem: each training example contains input features such as carat, cut, color, clarity, depth, table, and dimensions, and the target value is the diamond price in US dollars.
@@ -22,8 +20,9 @@ The target variable is:
 
 The input features are:
 
-- Numeric: `carat`, `depth`, `table`, `x`, `y`, `z`.
-- Ordered categorical: `cut`, `color`, `clarity`.
+• Numerical: carat (weight), depth (total depth percentage), table (width of top relative to widest point), and physical dimensions x (length), y (width), z (depth).
+• Categorical: cut (quality of the cut), color (diamond color, from J to D), and clarity (measurement of how clear the diamond is).
+
 
 The dataset is suitable because it is large enough for meaningful train/test evaluation, small enough for quick experiments on a laptop, and contains both physical measurements and quality categories. During preparation, the data will be checked for missing values, duplicate rows, zero dimensions, and unusual outliers. If a Kaggle version is used, index-only columns such as `id` or `Unnamed: 0` will be removed before training.
 
@@ -74,7 +73,7 @@ The code will use scikit-learn `Pipeline` and `ColumnTransformer` so preprocessi
 
 The experiments will follow a fixed, reproducible workflow:
 
-1. Load and validate the dataset.
+1. Load and preprocessing the dataset.
 2. Perform exploratory data analysis.
 3. Split the data into training and final test sets, using a fixed random seed.
 4. Fit the mean-price baseline.
@@ -117,16 +116,17 @@ These plots will support model comparison and error analysis.
 
 The main quality measure will be Mean Absolute Error because it is directly interpretable in dollars.
 
-- MAE: average absolute prediction error. Lower is better.
-- RMSE: square root of mean squared error. Lower is better and large mistakes are penalized more strongly.
-- R2: proportion of target variance explained by the model. Higher is better, with 1.0 representing perfect predictions.
+- MAE: average absolute prediction error. Represents the average absolute difference between the predicted and actual diamond prices. It is highly interpretable (e.g., "The model is off by X dollars on average").
+- RMSE: Measures the standard deviation of the residuals. It penalizes larger errors more heavily, which is crucial to ensure the model does not fail spectacularly on high-value diamonds.
+- R2: It explains the proportion of the variance in the diamond price that is predictable from the given features (a score closer to 1.0 indicates a better fit).
 - MAPE: average percentage error. It will be reported only as a secondary metric because percentage errors can overemphasize cheaper diamonds.
 
 Model selection will be based primarily on cross-validated MAE. Final model quality will be reported on the held-out test set using all metrics. The baseline mean-price regressor will be included in every result table so improvements are measurable.
 
 ## References
 
-[1] ggplot2 documentation, "Prices of over 50,000 round cut diamonds": https://ggplot2.tidyverse.org/reference/diamonds.html  
+[1] ggplot2 documentation, "Prices of over 50,000 round cut diamonds": https://ggplot2.tidyverse.org/reference/diamonds.html 
+[1] kaggle dataset link: https://www.kaggle.com/datasets/shivam2503/diamonds
 [2] scikit-learn documentation, `Ridge`: https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Ridge.html  
 [3] scikit-learn documentation, `RandomForestRegressor`: https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestRegressor.html  
 [4] XGBoost documentation: https://xgboost.readthedocs.io/en/stable/index.html  
