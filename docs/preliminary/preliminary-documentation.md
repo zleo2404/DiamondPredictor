@@ -8,7 +8,7 @@
 
 The goal is to predict the sale price of a diamond from its measurable properties and quality grades. This is a supervised regression problem: each training example contains input features such as carat, cut, color, clarity, depth, table, and dimensions, and the target value is the diamond price in US dollars.
 
-The solution will implement Linear/Ridge/Bayesian Regression, Random Forest, and XGBoost/Gradient Boosting. These models are appropriate for tabular data with a moderate number of rows and features, and they keep the method explainable.
+The solution will implement Linear/Ridge/Bayesian Ridge Regression, Random Forest, and XGBoost/Gradient Boosting. These models are appropriate for tabular data with a moderate number of rows and features, and they keep the method explainable.
 
 ## Selected Dataset
 
@@ -41,7 +41,7 @@ Linear Regression estimates one weight per feature and gives a direct baseline f
 
 Example: after preprocessing, Linear Regression may learn that higher `carat` strongly increases predicted price. Ridge Regression should give a similar interpretation while keeping correlated size features such as `x`, `y`, and `z` from receiving unstable coefficients.
 
-### Bayesian Regression
+### Bayesian Ridge Regression
 
 Bayesian Ridge Regression provides a probabilistic approach to linear modeling. Instead of estimating a single, fixed point value for each feature weight, it assumes a prior probability distribution over the weights and updates them based on the data to form a posterior distribution. Furthermore, it automatically estimates its own regularization parameters from the data during training, reducing the need for extensive hyperparameter tuning [9].
 
@@ -59,7 +59,7 @@ Gradient Boosting trains trees sequentially, where each new tree corrects errors
 
 Example: early trees may capture the broad price increase caused by `carat`, while later trees correct systematic errors for high-clarity or unusually proportioned diamonds.
 
-The expected main candidates are Random Forest and XGBoost/Gradient Boosting. Linear, Ridge and Bayesian Regression will be retained because they are easy to explain and provide useful sanity checks.
+The expected main candidates are Random Forest and XGBoost/Gradient Boosting. Linear, Ridge and Bayesian Ridge Regression will be retained because they are easy to explain and provide useful sanity checks.
 
 ## Libraries and Tools
 
@@ -84,7 +84,7 @@ The experiments will follow a fixed, reproducible workflow:
 2. Perform exploratory data analysis.
 3. Split the data into training and final test sets, using a fixed random seed.
 4. Fit the mean-price baseline.
-5. Train Linear/Ridge/Bayesian Regression, Random Forest, and XGBoost/Gradient Boosting models.
+5. Train Linear/Ridge/Bayesian Ridge Regression, Random Forest, and XGBoost/Gradient Boosting models.
 6. Tune important hyperparameters using cross-validation on the training set.
 7. Evaluate the models on the held-out test set.
 8. Save the final model and record the exact metrics and plots and compare them.
@@ -140,4 +140,4 @@ Model selection will be based primarily on cross-validated MAE. Final model qual
 [6] scikit-learn documentation, `Pipeline`: https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html  
 [7] scikit-learn documentation, `ColumnTransformer`: https://scikit-learn.org/stable/modules/generated/sklearn.compose.ColumnTransformer.html  
 [8] scikit-learn documentation, regression metrics and cross-validation: https://scikit-learn.org/stable/modules/model_evaluation.html#regression-metrics and https://scikit-learn.org/stable/modules/cross_validation.html
-[9] scikit-learn documentation, Bayesian Regressor: https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.BayesianRidge.html
+[9] scikit-learn documentation, Bayesian Ridge Regressor: https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.BayesianRidge.html
