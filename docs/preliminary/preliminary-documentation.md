@@ -21,6 +21,7 @@ The target variable is:
 The input features are:
 
 • Numerical: carat (weight), depth (total depth percentage), table (width of top relative to widest point), and physical dimensions x (length), y (width), z (depth).
+
 • Categorical: cut (quality of the cut), color (diamond color, from J to D), and clarity (measurement of how clear the diamond is).
 
 
