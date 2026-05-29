@@ -41,7 +41,7 @@ models/*
 !models/.gitkeep
 
 # Generated report artifacts
-reports/figures/*
-!reports/figures/.gitkeep
-reports/tables/*
-!reports/tables/.gitkeep
+#reports/figures/*
+#!reports/figures/.gitkeep
+#reports/tables/*
+#!reports/tables/.gitkeep
