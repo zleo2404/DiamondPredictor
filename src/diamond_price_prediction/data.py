@@ -43,4 +43,27 @@ def validate_raw(df: pd.DataFrame) -> None:
     if (df[TARGET] <= 0).any():
         raise ValueError("target column must contain strictly positive prices")
 
+def clean(df: pd.DataFrame) -> pd.DataFrame:
+    """Remove physically invalid rows, duplicates, and extreme dimensional 
+    outliers(where y or z exceed 30 mm since the largest legitimate diamond in the set has y < 12 mm)).
+    """
+    df = df.loc[(df[["x", "y", "z"]] > 0).all(axis=1)].copy()
+    df = df.loc[(df["y"] < 30) & (df["z"] < 30)].copy()
+    return df.drop_duplicates().reset_index(drop=True)
+
+
+def encode_ordinals(df: pd.DataFrame) -> pd.DataFrame:
+    """Map cut, color, clarity to integer ranks reflecting their natural order."""
+    df = df.copy()
+    df["cut"] = df["cut"].map({v: i for i, v in enumerate(CUT_ORDER)})
+    df["color"] = df["color"].map({v: i for i, v in enumerate(COLOR_ORDER)})
+    df["clarity"] = df["clarity"].map({v: i for i, v in enumerate(CLARITY_ORDER)})
+
+    if df[CATEGORICAL_FEATURES].isna().any().any():
+        raise ValueError("categorical columns contain values outside the defined order")
+
+    return df
+
+
+
 
