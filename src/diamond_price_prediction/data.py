@@ -64,6 +64,43 @@ def encode_ordinals(df: pd.DataFrame) -> pd.DataFrame:
 
     return df
 
+def split(
+    df: pd.DataFrame,
+    test_size: float = 0.20,
+    random_state: int = RANDOM_STATE,
+) -> tuple[pd.DataFrame, pd.DataFrame, pd.Series, pd.Series]:
+    """Stratified 80/20 split on carat quintiles.
+    
+    Returns: X_train, X_test, y_train, y_test (price in original USD).
+    """
+    layers = pd.qcut(df["carat"], q=5, labels=False, duplicates="drop")
+    X = df.drop(columns=[TARGET])
+    y = df[TARGET]
+    return train_test_split(
+        X,
+        y,
+        test_size=test_size,
+        random_state=random_state,
+        stratify=layers,
+    )
+
+
+def load_and_prepare() -> tuple[pd.DataFrame, pd.DataFrame, pd.Series, pd.Series]:
+    """Pipeline to validate the dataset"""
+    df = load_raw()
+    df = clean(df)
+    df = encode_ordinals(df)
+    return split(df)
+
+
+def log_transform(y: pd.Series | np.ndarray) -> np.ndarray:
+    """Natural log of price. All prices in the dataset are strictly positive."""
+    return np.log(y)
+
+
+def inverse_log(y: np.ndarray) -> np.ndarray:
+    """Inverse of log transform."""
+    return np.exp(y)
 
 
 
