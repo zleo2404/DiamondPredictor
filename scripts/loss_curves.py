@@ -4,8 +4,6 @@
 - Random Forest: CV RMSE vs n_estimators.
 - XGBoost: per-boosting-round train / validation RMSE.
 
-Run from project root:
-    PYTHONPATH=src python scripts/loss_curves.py
 """
 
 from __future__ import annotations

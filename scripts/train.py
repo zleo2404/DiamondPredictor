@@ -5,12 +5,6 @@ Outputs:
     reports/figures/metrics_bar.png      - cross-validation metric chart
     models/best_model.joblib             - selected model checkpoint
     models/best_model.json               - selected model metadata
-
-Run from project root:
-    PYTHONPATH=src python scripts/train.py
-
-Final held-out evaluation is intentionally opt-in:
-    PYTHONPATH=src python scripts/train.py --final-eval
 """
 
 from __future__ import annotations
@@ -24,7 +18,7 @@ import joblib
 import matplotlib
 matplotlib.use("Agg")
 
-import matplotlib.pyplot as plt  # noqa: E402
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import seaborn as sns

@@ -1,7 +1,4 @@
 """Cross-validated prediction diagnostics and feature-importance plots.
-
-Run from project root:
-    PYTHONPATH=src python scripts/diagnostics.py
 """
 
 from __future__ import annotations
