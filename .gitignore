@@ -30,12 +30,6 @@ build/
 dist/
 *.egg-info/
 
-# Data generated or downloaded during experiments
-data/raw/*
-!data/raw/.gitkeep
-data/processed/*
-!data/processed/.gitkeep
-
 # Trained models and checkpoints
 models/*
 !models/.gitkeep
