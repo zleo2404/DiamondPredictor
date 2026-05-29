@@ -10,7 +10,7 @@ the target is `price`, and the input features are `carat`, `cut`, `color`,
 ```text
 data/raw/diamonds.csv              Raw dataset
 src/diamond_price_prediction/      Reusable data, preprocessing, model, and metric code
-notebooks/01_eda.py                Exploratory analysis script
+data_analysis/eda.py               Exploratory analysis script
 scripts/train.py                   Cross-validation training and checkpoint generation
 scripts/loss_curves.py             Learning/loss curve generation
 scripts/diagnostics.py             Cross-validated diagnostics and feature importance
@@ -40,7 +40,7 @@ On Windows, activate the environment with:
 Run commands from the repository root:
 
 ```bash
-PYTHONPATH=src python notebooks/01_eda.py
+PYTHONPATH=src python data_analysis/eda.py
 PYTHONPATH=src python scripts/train.py
 PYTHONPATH=src python scripts/loss_curves.py
 PYTHONPATH=src python scripts/diagnostics.py
