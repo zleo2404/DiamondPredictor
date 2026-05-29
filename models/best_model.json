@@ -1,0 +1,13 @@
+{
+  "name": "xgboost",
+  "selection_metric": "cv_rmse_mean",
+  "cv_rmse_mean": 526.8628479003906,
+  "cv_rmse_std": 10.321611839175526,
+  "cv_mae_mean": 262.10639038085935,
+  "cv_mae_std": 3.363982688627687,
+  "cv_r2_mean": 0.982396924495697,
+  "cv_r2_std": 0.0004531556626745086,
+  "cv_mape_mean": 0.061371862143278125,
+  "cv_mape_std": 0.0004794439483381849,
+  "fit_seconds": 0.442720890045166
+}
