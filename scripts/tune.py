@@ -1,3 +1,11 @@
+"""
+Hyperparameter Tuning Pipeline for Diamond Price Prediction.
+
+This script loads the training data and performs grid search cross-validation 
+to find the optimal hyperparameters for various machine learning models 
+(XGBoost, Random Forest, and MLP Regressor). It prints out the best parameters 
+to be updated in the main models configuration file.
+"""
 from __future__ import annotations
 
 import time
