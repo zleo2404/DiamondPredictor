@@ -73,7 +73,7 @@ def main() -> None:
         
         print("\n" + "="*50)
         print(f"TUNING COMPLETED: {model_name.upper()} (in {dt:.1f} seconds)")
-        print(f"Best RMSE (3-Fold CV): {-grid_search.best_score_:.2f} USD")
+        print(f"Best RMSE (5-Fold CV): {-grid_search.best_score_:.2f} USD")
         print("PARAMETERS TO UPDATE IN models.py:")
         for param, value in best_params_clean.items():
             print(f"    {param} = {value}")
