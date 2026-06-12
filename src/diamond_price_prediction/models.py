@@ -75,6 +75,7 @@ def build_xgboost() -> TransformedTargetRegressor:
                     n_estimators=400,
                     learning_rate=0.05,
                     max_depth=6,
+                    subsample=0.8,
                     n_jobs=-1,
                     random_state=RANDOM_STATE,
                     tree_method="hist",

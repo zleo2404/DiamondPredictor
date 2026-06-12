@@ -26,7 +26,8 @@ def main() -> None:
         "xgboost": {
             "regressor__model__n_estimators": [200, 400],
             "regressor__model__learning_rate": [0.05, 0.1],
-            "regressor__model__max_depth": [4, 6, 8]
+            "regressor__model__max_depth": [4, 6, 8],
+            "regressor__model__subsample": [0.8, 1.0]
         },
         "random_forest": {
             "regressor__model__n_estimators": [200, 300],
