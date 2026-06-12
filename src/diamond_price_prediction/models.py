@@ -45,7 +45,9 @@ def build_random_forest() -> TransformedTargetRegressor:
             (
                 "model",
                 RandomForestRegressor(
-                    n_estimators=200,
+                    n_estimators=300,
+                    max_depth=15,
+                    min_samples_split=5,
                     n_jobs=-1,
                     random_state=RANDOM_STATE,
                 ),
@@ -71,7 +73,7 @@ def build_xgboost() -> TransformedTargetRegressor:
                 "model",
                 XGBRegressor(
                     n_estimators=400,
-                    learning_rate=0.1,
+                    learning_rate=0.05,
                     max_depth=6,
                     n_jobs=-1,
                     random_state=RANDOM_STATE,
@@ -87,7 +89,7 @@ def build_mlp_regressor(
     hidden_layer_sizes=(64, 32),
     activation="relu",
     solver="adam",
-    alpha=1e-3,
+    alpha=0.01,
     batch_size=256,
     learning_rate_init=1e-3,
     max_iter=500,
