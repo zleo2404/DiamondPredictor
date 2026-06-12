@@ -6,6 +6,7 @@ from sklearn.compose import TransformedTargetRegressor
 from sklearn.dummy import DummyRegressor
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.linear_model import LinearRegression
+from sklearn.neural_network import MLPRegressor
 from sklearn.pipeline import Pipeline
 
 from .data import RANDOM_STATE, inverse_log, log_transform
@@ -82,9 +83,56 @@ def build_xgboost() -> TransformedTargetRegressor:
     return _wrap_log_target(pipeline)
 
 
+def build_mlp_regressor(
+    hidden_layer_sizes=(64, 32),
+    activation="relu",
+    solver="adam",
+    alpha=1e-3,
+    batch_size=256,
+    learning_rate_init=1e-3,
+    max_iter=500,
+    early_stopping=True,
+    validation_fraction=0.1,
+    n_iter_no_change=15,
+    tol=1e-4,
+    random_state=RANDOM_STATE,
+    **kwargs,
+) -> TransformedTargetRegressor:
+    params = {
+        "hidden_layer_sizes": hidden_layer_sizes,
+        "activation": activation,
+        "solver": solver,
+        "alpha": alpha,
+        "batch_size": batch_size,
+        "learning_rate_init": learning_rate_init,
+        "max_iter": max_iter,
+        "early_stopping": early_stopping,
+        "validation_fraction": validation_fraction,
+        "n_iter_no_change": n_iter_no_change,
+        "tol": tol,
+        "random_state": random_state,
+    }
+    params.update(kwargs)
+
+    pipeline = Pipeline(
+        steps=[
+            (
+                "preprocess",
+                build_feature_preprocessor(
+                    scale_numeric=True,
+                    categorical="onehot",
+                ),
+            ),
+            ("model", MLPRegressor(**params)),
+        ]
+    )
+    return _wrap_log_target(pipeline)
+
+
 MODEL_BUILDERS = {
     "mean_baseline": build_mean_baseline,
     "linear_regression": build_linear_regression,
     "random_forest": build_random_forest,
     "xgboost": build_xgboost,
+    "mlp_regressor": build_mlp_regressor,
 }

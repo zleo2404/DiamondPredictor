@@ -3,6 +3,7 @@
 - Linear Regression: learning curve (CV RMSE vs training-set size).
 - Random Forest: CV RMSE vs n_estimators.
 - XGBoost: per-boosting-round train / validation RMSE.
+- MLP Regressor: per-iteration training loss and validation R2.
 
 """
 
@@ -33,7 +34,10 @@ from diamond_price_prediction.data import (
     load_and_prepare,
     log_transform,
 )
-from diamond_price_prediction.models import build_linear_regression
+from diamond_price_prediction.models import (
+    build_linear_regression,
+    build_mlp_regressor,
+)
 from diamond_price_prediction.preprocessing import build_feature_preprocessor
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -163,6 +167,47 @@ def plot_xgb_boosting_curve(X_train, y_train):
     print(f"  final train RMSE (log): {train_rmse[-1]:.4f}, val RMSE (log): {val_rmse[-1]:.4f}")
 
 
+def plot_mlp_training_curve(X_train, y_train):
+    """Per-iteration MLP training loss and early-stopping validation R2."""
+    model = build_mlp_regressor()
+    model.fit(X_train, y_train)
+
+    fitted_mlp = model.regressor_.named_steps["model"]
+    loss_curve = fitted_mlp.loss_curve_
+    validation_scores = getattr(fitted_mlp, "validation_scores_", None)
+    has_validation_scores = (
+        validation_scores is not None and len(validation_scores) > 0
+    )
+
+    if has_validation_scores:
+        fig, axes = plt.subplots(2, 1, figsize=(7, 6.5), sharex=True)
+        loss_ax, val_ax = axes
+    else:
+        fig, loss_ax = plt.subplots(figsize=(7, 4.5))
+        val_ax = None
+
+    iterations = range(1, len(loss_curve) + 1)
+    loss_ax.plot(iterations, loss_curve, color="#4477AA")
+    loss_ax.set_ylabel("Training loss on log-price")
+    loss_ax.set_title("MLP Regressor — training curve")
+
+    if val_ax is not None:
+        val_iterations = range(1, len(validation_scores) + 1)
+        val_ax.plot(val_iterations, validation_scores, color="#EE6677")
+        val_ax.set_xlabel("iteration")
+        val_ax.set_ylabel("Validation R2")
+    else:
+        loss_ax.set_xlabel("iteration")
+
+    fig.tight_layout()
+    fig.savefig(FIG_DIR / "loss_mlp_training_curve.png", dpi=130)
+    plt.close(fig)
+
+    print(f"  final training loss (log-price): {loss_curve[-1]:.4f}")
+    if has_validation_scores:
+        print(f"  final validation R2: {validation_scores[-1]:.4f}")
+
+
 def main() -> None:
     X_train, _, y_train, _ = load_and_prepare()
     print(f"train: {X_train.shape}")
@@ -176,7 +221,10 @@ def main() -> None:
     print("\n--- XGBoost boosting curve ---")
     plot_xgb_boosting_curve(X_train, y_train)
 
-    print(f"\nWrote 3 loss/learning-curve figures to {FIG_DIR}")
+    print("\n--- MLP Regressor training curve ---")
+    plot_mlp_training_curve(X_train, y_train)
+
+    print(f"\nWrote 4 loss/learning-curve figures to {FIG_DIR}")
 
 
 if __name__ == "__main__":
