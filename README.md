@@ -35,7 +35,7 @@ On Windows, activate the environment with:
 .venv\Scripts\activate
 ```
 
-## Reproduce Midterm Outputs
+## Reproduce Outputs
 
 Run commands from the repository root:
 

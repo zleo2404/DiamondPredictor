@@ -1,10 +1,10 @@
 model,feature,importance
-random_forest,carat,0.070048
-random_forest,depth,0.001487
-random_forest,table,0.001065
-random_forest,x,0.040775
-random_forest,y,0.837351
-random_forest,z,0.001982
+random_forest,carat,0.070047
+random_forest,depth,0.001480
+random_forest,table,0.001063
+random_forest,x,0.040781
+random_forest,y,0.837347
+random_forest,z,0.001989
 random_forest,cut,0.001130
 random_forest,color,0.016056
 random_forest,clarity,0.030106
