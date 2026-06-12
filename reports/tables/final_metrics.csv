@@ -1,0 +1,5 @@
+model,rmse_usd,mae_usd,r2,mape
+mean_baseline,4042.0278,3057.6492,-0.0001,1.8770
+linear_regression,1420.7685,567.8257,0.8764,0.1268
+random_forest,545.2483,270.6550,0.9818,0.0633
+xgboost,537.3375,267.9379,0.9823,0.0618
